@@ -1,0 +1,3 @@
+setType(response.data.moves.map(x => x.move.name).sort().map(x => <li>{x}</li>)    )
+
+console.log(response.data.types.map(x => x.type.name)   

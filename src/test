@@ -1,3 +1,20 @@
-setType(response.data.moves.map(x => x.move.name).sort().map(x => <li>{x}</li>)    )
+function nextPage(x){
+    axios.get(x).then(res =>{
+      setPage(res.data.next)
+    }) 
+}
+const hp = res.data.stats.map(x => {
+ <li>{x.stat.name }  {x["base_stat"]}</li> 
+})
+const exp = res.data[base_experience]
+const moves = res.data.moves[  Math.floor((Math.random() * (res.data.moves.length) ))  ].move.name
 
-console.log(response.data.types.map(x => x.type.name)   
+
+console.log (props.arr.map(site => {
+   // useEffect(()=> { 
+        axios.get(site)
+        .then(res => {res.data.weight })
+        .catch((err) => {console.error(err) })  
+  //    }, [site]) 
+  } )
+  )

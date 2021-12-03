@@ -18,3 +18,7 @@ console.log (props.arr.map(site => {
   //    }, [site]) 
   } )
   )
+
+"https://pokeapi.co/api/v2/pokemon/1/"
+
+         <Pokedex arr={siteArr} names={nameArr} /> 

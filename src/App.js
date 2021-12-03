@@ -11,8 +11,9 @@ const initialSite = "https://pokeapi.co/api/v2/pokemon/?limit=5"
 
 function App() {
   const [siteArr, setSiteArr] = useState([])
-  const [nameArr, setNameArr] = useState("")
+  const [jsonArr, setJsonArr] = useState([])
   const [page, setPage] = useState(initialSite)
+  const [nameArr, setNameArr] = useState([])
   
   function nextPage(){
     
@@ -35,8 +36,15 @@ function App() {
             .then(response => {
               // handle success
               //setPoke(response.data.name)
-            setSiteArr(response.data.results.map(x =>  x.url) )
             setNameArr(response.data.results.map(x =>  x.name) )
+            setSiteArr(response.data.results.map(x =>  x.url) )
+            setJsonArr(siteArr.map(http => axios.get(http)
+                              .then(res => res.data) 
+                              
+                              .catch((err)=> console.error(err))
+            )  
+            ) 
+                              
               }) 
             .catch((err) => {
               console.error(err)
@@ -44,6 +52,7 @@ function App() {
      }, [page])        
   
   
+  //console.log(jsonArr)
 
   return (
                                   //Each poke site is an array with each url
@@ -51,10 +60,10 @@ function App() {
       <h1>Pokedex</h1>
       <button onClick={previousPage} > prev </button>
         <button onClick={nextPage} > next </button>
-            
+            <hr/>
+        <button onClick={()=> setJsonArr([9])} > help</button>
+        <Pokedex names={nameArr} json={jsonArr} /> 
         
-        
-         <Pokedex arr={siteArr} name={nameArr} /> 
         
          
         

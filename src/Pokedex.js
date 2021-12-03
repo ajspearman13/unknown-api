@@ -7,13 +7,13 @@ import React, { useState , useEffect} from 'react';
 
 function Pokedex(props){
   
-  const links = props.arr.map(x => <Pokemon key={x} link={x}/>) 
+  //const links = props.json.map(x => <Pokemon key={x.name} link={x}/>) 
   
- // console.log(list)
+ console.log(props)
   
   return(
       <div >
-       {links}
+       
       </div>
   )
 }
@@ -57,7 +57,7 @@ function Pokemon(props){
   return(
     <div  key={name}>
       <img src={pic} alt={name}/>
-     <p>{name}<br/>{type}<br/> EXP {baseEx} <br/> {moves1}  {moves2}  {moves3}  {moves4}<br/></p>
+     <p>{name}<br/>{type}<br/> EXP {baseEx} <br/> <br/></p>
      <ul>
        {hp}
      </ul>

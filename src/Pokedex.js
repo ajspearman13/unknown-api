@@ -6,20 +6,15 @@ import React, { useState , useEffect} from 'react';
 
 
 function Pokedex(props){
-  
-  //const links = props.json.map(x => <Pokemon key={x.name} link={x}/>) 
-  
- console.log(props)
-  
+   
+ const links = props.urls.map(x => <Pokemon link={x} key={x} />)
+
   return(
       <div >
-       
+      {links}
       </div>
   )
 }
-
-
-
 function Pokemon(props){
  const [name, setName] = useState('')
  const [type, setType] = useState('')
@@ -36,10 +31,10 @@ function Pokemon(props){
         .then(res =>{
          
          setName(res.data.name.toLocaleUpperCase())
-         setMoves1(res.data.moves[  Math.floor((Math.random() * (res.data.moves.length) ))  ].move.name)
-         setMoves2(res.data.moves[  Math.floor((Math.random() * (res.data.moves.length) ))  ].move.name)
-         setMoves3(res.data.moves[  Math.floor((Math.random() * (res.data.moves.length) ))  ].move.name)
-         setMoves4(res.data.moves[  Math.floor((Math.random() * (res.data.moves.length) ))  ].move.name)
+         setMoves1(res.data.moves[  7 ].move.name)
+         setMoves2(res.data.moves[  14 ].move.name)
+         setMoves3(res.data.moves[  10 ].move.name)
+         setMoves4(res.data.moves[  22 ].move.name)
          setType(res.data.types.map(x => x.type.name +" " ))
           //setMoves(res.data.moves.map(x => x.move.name).sort().map(x => <li>{x}</li>)    )
          setPic(res.data.sprites['front_default'])
@@ -58,6 +53,7 @@ function Pokemon(props){
     <div  key={name}>
       <img src={pic} alt={name}/>
      <p>{name}<br/>{type}<br/> EXP {baseEx} <br/> <br/></p>
+     <p>{moves1}  {moves2} {moves3} {moves4}</p>
      <ul>
        {hp}
      </ul>

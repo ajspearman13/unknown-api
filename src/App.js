@@ -5,15 +5,17 @@ import React, { useState , useEffect} from 'react';
 import Pokedex  from './Pokedex';
 
 import axios from 'axios';
-const initialSite = "https://pokeapi.co/api/v2/pokemon/?limit=5"
+
 
 
 
 function App() {
   const [siteArr, setSiteArr] = useState([])
-  const [jsonArr, setJsonArr] = useState([])
-  const [page, setPage] = useState(initialSite)
+ 
+  const [page, setPage] = useState("https://pokeapi.co/api/v2/pokemon/?limit=5")
   const [nameArr, setNameArr] = useState([])
+  
+  
   
   function nextPage(){
     
@@ -26,32 +28,28 @@ function App() {
     axios.get(page).then(res =>{
       setPage(res.data.previous)
     }) 
-}
+ }  
 
-   
   
     // Make a request for a user with a given ID
     useEffect(()=> { 
       axios.get(page) 
             .then(response => {
               // handle success
-              //setPoke(response.data.name)
-            setNameArr(response.data.results.map(x =>  x.name) )
-            setSiteArr(response.data.results.map(x =>  x.url) )
-            setJsonArr(siteArr.map(http => axios.get(http)
-                              .then(res => res.data) 
-                              
-                              .catch((err)=> console.error(err))
-            )  
-            ) 
-                              
-              }) 
-            .catch((err) => {
-              console.error(err)
-            })   
-     }, [page])        
+              setNameArr(response.data.results.map(x =>  x.name) )
+              setSiteArr(response.data.results.map(x =>  x.url) )                  
+             }).catch((err) => {console.error(err) })  
+            
+            
+     }, [page ])   
+
+   
+     
+       
+      
+     
   
-  
+  //   console.log(siteArr)
   //console.log(jsonArr)
 
   return (
@@ -61,9 +59,10 @@ function App() {
       <button onClick={previousPage} > prev </button>
         <button onClick={nextPage} > next </button>
             <hr/>
-        <button onClick={()=> setJsonArr([9])} > help</button>
-        <Pokedex names={nameArr} json={jsonArr} /> 
-        
+            <button  > help</button>
+        <Pokedex names={nameArr} urls={siteArr} /> 
+        <button onClick={previousPage} > prev </button>
+        <button onClick={nextPage} > next </button>
         
          
         

@@ -22,3 +22,30 @@ console.log (props.arr.map(site => {
 "https://pokeapi.co/api/v2/pokemon/1/"
 
          <Pokedex arr={siteArr} names={nameArr} /> 
+
+         async function getApi(http){
+      
+          try {
+              let res = await fetch(http)
+              let h =  await res.json()
+              let i = JSON.stringify(h)
+              
+              return i
+              }
+          catch (err){console.log(err)}
+        }
+        function fetchApi(http){
+         
+          fetch(http)
+            .then(res => res.json())
+            .then(data => data)            //   make data return something
+            .catch((err) => {console.error(err) })
+    
+        }
+
+        <img src={pic} alt={name}/>
+     <p>{name}<br/>{type}<br/> EXP {baseEx} <br/> <br/></p>
+     <p>{moves1}  {moves2} {moves3} {moves4}</p>
+     <ul>
+       {hp}
+     </ul>

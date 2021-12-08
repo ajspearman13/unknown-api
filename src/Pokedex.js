@@ -35,7 +35,7 @@ function Pokemon(props){
          setMoves2(res.data.moves[  14 ].move.name)
          setMoves3(res.data.moves[  10 ].move.name)
          setMoves4(res.data.moves[  22 ].move.name)
-         setType(res.data.types.map(x => x.type.name +" " ))
+         setType(res.data.types.map(x => x.type.name +" " )) // check this out
           //setMoves(res.data.moves.map(x => x.move.name).sort().map(x => <li>{x}</li>)    )
          setPic(res.data.sprites['front_default'])
          setBaseEx(res.data['base_experience'])
@@ -51,16 +51,25 @@ function Pokemon(props){
 
   return(
     <div  key={name}>
-      <img src={pic} alt={name}/>
-     <p>{name}<br/>{type}<br/> EXP {baseEx} <br/> <br/></p>
-     <p>{moves1}  {moves2} {moves3} {moves4}</p>
-     <ul>
-       {hp}
-     </ul>
-
-
+      <Display   name={name} type={type} baseEx={baseEx} hp={hp} pic={pic}
+                  moves={[moves1, moves2,moves3,moves4]} 
+      />
     </div>
     
+  )
+
+}
+function Display(props){
+
+  return(
+    <div>
+   <img src={props.pic} />
+     <p>{props.name}<br/>{props.type}<br/> EXP {props.baseEx} <br/> <br/></p>
+    
+     <ul>
+       {props.hp}
+     </ul>
+    </div>
   )
 }
   

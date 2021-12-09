@@ -22,12 +22,14 @@ function App() {
     axios.get(page).then(res =>{
       setPage(res.data.next)
     }) 
+    window.scrollTo(0,0)
   }
 
   function previousPage(){
     axios.get(page).then(res =>{
       setPage(res.data.previous)
     }) 
+    window.scrollTo(0,0)
  }  
 
   
@@ -59,7 +61,7 @@ function App() {
       <button onClick={previousPage} > prev </button>
         <button onClick={nextPage} > next </button>
             <hr/>
-            <button  > help</button>
+          
         <Pokedex names={nameArr} urls={siteArr} /> 
         <button onClick={previousPage} > prev </button>
         <button onClick={nextPage} > next </button>

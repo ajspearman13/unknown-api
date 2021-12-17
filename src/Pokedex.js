@@ -1,7 +1,7 @@
 import App from "./App"
 import axios from 'axios';
-import React, { useState , useEffect} from 'react';
-
+import React, { useState , useEffect, useRef} from 'react';
+import './App.css';
 
 function getColor(x){
 
@@ -26,14 +26,12 @@ function getColor(x){
   :"white"
 
 }
-
-
 function Pokedex(props){
    
  const links = props.urls.map(x => <Pokemon link={x} key={x} />)
 
   return(
-      <div >
+      <div id="poke-list">
       {links}
       </div>
   )
@@ -47,8 +45,9 @@ function Pokemon(props){
  const [moves4, setMoves4] = useState('')
  const [pic, setPic] = useState('')
  const [baseEx, setBaseEx] = useState('')
- const [hp, setHp] = useState('')
+ const [stats, setStats] = useState('')
  const [color, setColor] =useState('')
+ const [id, setId] = useState('')
 
   useEffect(()=> { 
   axios.get(props.link) 
@@ -59,13 +58,17 @@ function Pokemon(props){
          setMoves2(res.data.moves[  14 ].move.name)
          setMoves3(res.data.moves[  10 ].move.name)
          setMoves4(res.data.moves[  22 ].move.name)
-         setType(res.data.types.map(x => x.type.name +" " )) // check this out
+         setType(res.data.types.map(x => x.type.name.toLocaleUpperCase() +" " )) // check this out
           //setMoves(res.data.moves.map(x => x.move.name).sort().map(x => <li>{x}</li>)    )
          setPic(res.data.sprites['front_default'])
          setBaseEx(res.data['base_experience'])
-         setColor(res.data.types[0].type.name)
-         setHp(res.data.stats.map(x => {
-         return <li>{x.stat.name }  {x["base_stat"]}</li> 
+         setColor(getColor(res.data.types[0].type.name) )
+         setId(res.data.id)
+
+         setStats(res.data.stats.map(x => {
+         return <li> <span>{x.stat.name.toUpperCase() }</span> 
+                     <span>{x["base_stat"]}  </span>
+                </li> 
          }))
         })
         .catch((err) => {
@@ -76,8 +79,8 @@ function Pokemon(props){
 
   return(
     <div  key={name}>
-      <Display   name={name} type={type} baseEx={baseEx} hp={hp} pic={pic}
-                  moves={[moves1, moves2,moves3,moves4]} color={color}
+      <Display   name={name} type={type} baseEx={baseEx} stats={stats} pic={pic}
+                  moves={[moves1, moves2,moves3,moves4]} color={color} id={id}
       />
     </div>
     
@@ -85,23 +88,45 @@ function Pokemon(props){
 
 }
 function Display(props){ 
-  
   //const style = [ "colours", ".", props.type[0] ].join("")
+  const background = props.color
   
-  
-  
-  const background = getColor(props.color)
+  const dropInfo = useRef()
+  const dropdown = useRef()
+  const [show, setShow] = useState('drop-info')
+
  
+  function toggle(){
+    
+    return (show === 'drop-info') ? setShow('show')
+    : setShow('drop-info')
+    
+    
+    
+  }
 
   return(
-    <div style={{backgroundColor: background }} >
-        <button onClick={()=>console.log(props.color)} > help </button>
-   <img src={props.pic} />
-     <p>{props.name}<br/>{props.type}<br/> EXP {props.baseEx} <br/> <br/></p>
-    
-     <ul>
-       {props.hp}
-     </ul>
+    <div style={{backgroundColor: background }} class="poke-box" >
+      <div class='header'>
+        <p class='poke-id'> No. {props.id}</p> 
+        <div class="poke-pic">
+          <img src={props.pic} class="poke-pic"  alt={props.name} />
+        </div>
+        <p class='poke-name'>{props.name}</p>
+        <p class='poke-type'>  {props.type}</p>
+        <button class="drop-button" onClick={toggle} >drop</button>
+      </div>     
+      <div class="dropdown"  ref={dropdown}>
+        <div ref={dropInfo} class={show}   >
+          <ul>
+            <li style={{backgroundColor : background + ".02"}}> EXP <span>{props.baseEx} </span></li>
+            {props.stats}
+          </ul>
+        </div>
+      </div>
+      
+      
+
     </div>
   )
 }

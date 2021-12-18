@@ -31,9 +31,11 @@ function Pokedex(props){
  const links = props.urls.map(x => <Pokemon link={x} key={x} />)
 
   return(
+    <div id="list-wrapper"> 
       <div id="poke-list">
       {links}
       </div>
+    </div>
   )
 }
 function Pokemon(props){
@@ -107,14 +109,14 @@ function Display(props){
 
   return(
     <div style={{backgroundColor: background }} class="poke-box" >
-      <div class='header'>
+      <div >
         <p class='poke-id'> No. {props.id}</p> 
         <div class="poke-pic">
-          <img src={props.pic} class="poke-pic"  alt={props.name} />
+          <img src={props.pic} class="pic"  alt={props.name} />
         </div>
         <p class='poke-name'>{props.name}</p>
         <p class='poke-type'>  {props.type}</p>
-        <button class="drop-button" onClick={toggle} >drop</button>
+        <button class="drop-button" onClick={toggle} >Stats</button>
       </div>     
       <div class="dropdown"  ref={dropdown}>
         <div ref={dropInfo} class={show}   >

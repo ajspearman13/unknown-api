@@ -92,19 +92,14 @@ function Pokemon(props){
 function Display(props){ 
   //const style = [ "colours", ".", props.type[0] ].join("")
   const background = props.color
-  
   const dropInfo = useRef()
   const dropdown = useRef()
   const [show, setShow] = useState('drop-info')
 
  
   function toggle(){
-    
     return (show === 'drop-info') ? setShow('show')
-    : setShow('drop-info')
-    
-    
-    
+    : setShow('drop-info')  
   }
 
   return(

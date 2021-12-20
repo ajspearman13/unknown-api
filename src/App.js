@@ -1,5 +1,5 @@
 
-import React, { useState , useEffect} from 'react';
+import React, { useState , useEffect, useRef } from 'react';
 import Pokedex  from './Pokedex';
 
 import axios from 'axios';
@@ -12,39 +12,63 @@ function App() {
  
   const [page, setPage] = useState("https://pokeapi.co/api/v2/pokemon/?limit=20")
   const [nameArr, setNameArr] = useState([])
-  
+  const prevBtn = useRef()
+  const nextBtn = useRef()
   
   
   function nextPage(){
-    
     axios.get(page).then(res =>{
       setPage(res.data.next)
+      
     }) 
+    
     window.scrollTo(0,0)
+   
   }
 
   function previousPage(){
     axios.get(page).then(res =>{
       setPage(res.data.previous)
+      
     }) 
+   
     window.scrollTo(0,0)
+  
+    
  }  
   function scrollTop(){
     window.scrollTo(0,0)
   }
-
   
+  useEffect(()=> { 
+    axios.get(page).then(response=> {
+          (response.data.previous === null)? prevBtn.current.style.visibility='hidden' 
+          : prevBtn.current.style.visibility='visible' ;
+           (response.data.next === null)? nextBtn.current.style.visibility='hidden' 
+             : nextBtn.current.style.visibility='visible' 
+    })
+  }, [page ])
     // Make a request for a user with a given ID
     useEffect(()=> { 
+      
       axios.get(page) 
             .then(response => {
               // handle success
               setNameArr(response.data.results.map(x =>  x.name) )
-              setSiteArr(response.data.results.map(x =>  x.url) )                  
-             }).catch((err) => {console.error(err) })  
-            
+              setSiteArr(response.data.results.map(x =>  x.url) )  
+              
+              
+              
+              //(response.data.previous === null)? prevBtn.current.style.visibility='hidden' 
+             //: prevBtn.current.style.visibility='visible'             
+             })
+      .catch((err) => {console.error(err) })  
+
+
+      console.log(prevBtn.current)
             
      }, [page ])   
+
   
   //   console.log(siteArr)
   //console.log(jsonArr)
@@ -53,9 +77,9 @@ function App() {
                                   //Each poke site is an array with each url
     <div className="App">
       <div class='header'>
-        <div class='pg-btn' > <button onClick={previousPage} > prev </button></div>
+        <div >  <button  class='pg-btn' id='prev-btn' ref={prevBtn} onClick={previousPage} > prev </button></div>
         <h1>Pokedex</h1>
-        <div class='pg-btn' > <button onClick={nextPage} > next </button> </div>
+        <div > <button class='pg-btn' id='next-btn' ref={nextBtn} onClick={nextPage} > next </button> </div>
       </div>
           
         <Pokedex names={nameArr} urls={siteArr} /> 

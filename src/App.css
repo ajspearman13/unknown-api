@@ -7,7 +7,7 @@ body{
 }
 #top-btn{
     position: fixed;
-    bottom: 5px;
+    bottom: 65px;
     right: 5px;
     border: none;
     background-color: transparent;
@@ -26,6 +26,7 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    z-index: 2;
 }
 .pg-btn:hover{
     transform: scale(1.2);
@@ -35,94 +36,4 @@ body{
 }
 #prev-btn{
     visibility: visible;
-}
-#list-wrapper{
-    display: flex;
-    justify-content: center;
-    background-image: url("https://images.alphacoders.com/201/201831.png");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    background-size: cover;
-}
-#poke-list{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content:space-evenly;
-    max-width: 1200px;
-    margin-top: 110px;
-    padding-bottom: 130px;
-}
-.poke-box {
-    font-size: auto;
-    width: 250px;
-    border-radius: 7px; 
-    color: white;
-    box-shadow: 5px 0px 5px 5px rgba(0, 0, 0, 0.295);
-}
-.poke-name{
-    font-size: large;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    text-align: center;
-    font-weight:700;
-    color: whitesmoke;
-}
-.poke-id{
-    margin-left: 10px;
-    padding-top: 13px;
-    color: whitesmoke;
-}
-.poke-pic{
-    display: flex;
-    justify-content: center;
-    background-color: whitesmoke;
-    margin-left: 5px;
-    margin-right: 5px;
-}
-.pic:hover{
-  transform: scale(1.2);
-}
-.poke-type{
-    margin-left: 10px;
-    font-size: 13px;
-    color: whitesmoke;
-}
-.dropdown{
-    position: relative;
-    padding-bottom: 1px;
-}
-.drop-button{
-    width: 100%;
-    background-color: transparent;
-    border: none;
-    padding-bottom: 15px;
-    color: whitesmoke;
-}
-.drop-button::after{
-    content: '\25be';
-    float: right;
-}
-.drop-button:hover{
-    background-color: rgba(216, 191, 216, 0.26);
-    font-size: large;
-}
-.drop-info{
-  max-height: 0;
-  overflow: hidden;
-  transition: all cubic-bezier(0.55, 0.055, 0.675, 0.19);
-}
-.show {
-    height: auto;
-    max-height: 100%;
-    transition : all 4.ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
-    color: black;
-    background-color: whitesmoke;
-}
-li{
-    list-style-type: none;
-    padding: 3px;
-    margin-left: -40px;
-    display:flex;
-    justify-content: space-between;
 }

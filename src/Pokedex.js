@@ -4,7 +4,6 @@ import React, { useState , useEffect, useRef} from 'react';
 import './App.css';
 
 function getColor(x){
-
   return (x === "normal") ? '#A8A77A'
   :(x === "fire") ? '#EE8130'
   :(x === "water") ? '#6390F0' 
@@ -24,12 +23,9 @@ function getColor(x){
   :(x === "steel") ? '#B7B7CE'
   :(x === "fairy") ? '#D685AD'
   :"white"
-
 }
 function Pokedex(props){
-   
  const links = props.urls.map(x => <Pokemon link={x} key={x} />)
-
   return(
     <div id="list-wrapper"> 
       <div id="poke-list">
@@ -54,7 +50,6 @@ function Pokemon(props){
   useEffect(()=> { 
   axios.get(props.link) 
         .then(res =>{
-         
          setName(res.data.name.toLocaleUpperCase())
          setMoves1(res.data.moves[  7 ].move.name)
          setMoves2(res.data.moves[  14 ].move.name)
@@ -66,7 +61,6 @@ function Pokemon(props){
          setBaseEx(res.data['base_experience'])
          setColor(getColor(res.data.types[0].type.name) )
          setId(res.data.id)
-
          setStats(res.data.stats.map(x => {
          return <li> <span>{x.stat.name.toUpperCase() }</span> 
                      <span>{x["base_stat"]}  </span>
@@ -77,17 +71,13 @@ function Pokemon(props){
           console.error(err)
         })  
   }, [props.link]) 
-
-
   return(
     <div  key={name}>
       <Display   name={name} type={type} baseEx={baseEx} stats={stats} pic={pic}
                   moves={[moves1, moves2,moves3,moves4]} color={color} id={id}
       />
     </div>
-    
   )
-
 }
 function Display(props){ 
   //const style = [ "colours", ".", props.type[0] ].join("")
@@ -95,13 +85,10 @@ function Display(props){
   const dropInfo = useRef()
   const dropdown = useRef()
   const [show, setShow] = useState('drop-info')
-
- 
   function toggle(){
     return (show === 'drop-info') ? setShow('show')
     : setShow('drop-info')  
   }
-
   return(
     <div style={{backgroundColor: background }} class="poke-box" >
       <div >
@@ -121,12 +108,7 @@ function Display(props){
           </ul>
         </div>
       </div>
-      
-      
-
     </div>
   )
 }
-  
   export  default Pokedex;
-  

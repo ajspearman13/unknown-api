@@ -4,7 +4,6 @@ body{
 #arrow{
     width: 28px;
     background-color: transparent;
-    
 }
 #top-btn{
     position: fixed;
@@ -27,7 +26,6 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    
 }
 .pg-btn:hover{
     transform: scale(1.2);
@@ -38,7 +36,6 @@ body{
 #prev-btn{
     visibility: visible;
 }
-
 #list-wrapper{
     display: flex;
     justify-content: center;
@@ -47,7 +44,6 @@ body{
     background-attachment: fixed;
     background-position: center;
     background-size: cover;
-    
 }
 #poke-list{
     display: flex;
@@ -107,7 +103,6 @@ body{
     content: '\25be';
     float: right;
 }
-
 .drop-button:hover{
     background-color: rgba(216, 191, 216, 0.26);
     font-size: large;
@@ -130,5 +125,4 @@ li{
     margin-left: -40px;
     display:flex;
     justify-content: space-between;
-    
 }

@@ -1,9 +1,9 @@
 body{
     background-color: rgba(209, 209, 209, 0.075);
 }
-#arrow{
-    width: 28px;
-    background-color: transparent;
+#arrow-pic{
+    width: 48px;
+   
 }
 #top-btn{
     position: fixed;

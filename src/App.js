@@ -2,7 +2,7 @@
 import React, { useState , useEffect, useRef } from 'react';
 import Pokedex  from './Pokedex';
 import axios from 'axios';
-const arrow = './arrow-pic.jpeg'
+import arrow from './arrow-pic.png'
 function App() {
   const [siteArr, setSiteArr] = useState([])
   const [page, setPage] = useState("https://pokeapi.co/api/v2/pokemon/?limit=20")
@@ -49,7 +49,7 @@ function App() {
       </div>
         <Pokedex names={nameArr} urls={siteArr} /> 
         <button onClick={scrollTop} id='top-btn' > 
-            <img id='arrow' src={arrow} alt='up-arrow'/>
+            <img id='arrow-pic' src={arrow} alt='up-arrow'/>
         </button>
     </div>
   );

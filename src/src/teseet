@@ -1,0 +1,23 @@
+const arr = [7 , 8, 10]
+function test(){
+return (! arr.includes(48))
+}
+console.log(test(arr))
+
+if (btnText === 'select'){
+    if   (value.length === 6){  alert('full')}
+    else {setBtnText('drop')
+         setValue([...value, props.data])}
+       
+   } 
+   else{ setBtnText('select') 
+       setValue  ( value.filter(x => x[0] !== props.data[0]))
+       
+   }
+   display: flex;
+    flex-direction: row;
+    position: fixed ;
+    bottom : -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: bisque;

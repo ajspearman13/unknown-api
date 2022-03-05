@@ -1,0 +1,102 @@
+function nextPage(x){
+    axios.get(x).then(res =>{
+      setPage(res.data.next)
+    }) 
+}
+const hp = res.data.stats.map(x => {
+ <li>{x.stat.name }  {x["base_stat"]}</li> 
+})
+const exp = res.data[base_experience]
+const moves = res.data.moves[  Math.floor((Math.random() * (res.data.moves.length) ))  ].move.name
+
+
+console.log (props.arr.map(site => {
+   // useEffect(()=> { 
+        axios.get(site)
+        .then(res => {res.data.weight })
+        .catch((err) => {console.error(err) })  
+  //    }, [site]) 
+  } )
+  )
+
+"https://pokeapi.co/api/v2/pokemon/1/"
+
+         <Pokedex arr={siteArr} names={nameArr} /> 
+
+         async function getApi(http){
+      
+          try {
+              let res = await fetch(http)
+              let h =  await res.json()
+              let i = JSON.stringify(h)
+              
+              return i
+              }
+          catch (err){console.log(err)}
+        }
+        function fetchApi(http){
+         
+          fetch(http)
+            .then(res => res.json())
+            .then(data => data)            //   make data return something
+            .catch((err) => {console.error(err) })
+    
+        }
+
+        <img src={pic} alt={name}/>
+     <p>{name}<br/>{type}<br/> EXP {baseEx} <br/> <br/></p>
+     <p>{moves1}  {moves2} {moves3} {moves4}</p>
+     <ul>
+       {hp}
+     </ul>
+
+const background = props.type[0]
+switch (background) {
+  const ans= ""
+  case "normal": '#A8A77A'; break;
+	case "fire": '#EE8130'; break;
+	case "water": '#6390F0' ; break;
+	case "electric": '#F7D02C'; break;
+	case "grass": '#7AC74C'; break;
+	case "ice": '#96D9D6'; break;
+	case "fighting": '#C22E28'; break;
+	case "poison": '#A33EA1'; break;
+	case "ground": '#E2BF65'; break;
+	case "flying": '#A98FF3'; break;
+	case "psychic": '#F95587'; break;
+	case "bug": '#A6B91A'; break;
+	case "rock": '#B6A136'; break;
+	case "ghost": '#735797'; break;
+	case "dragon": '#6F35FC'; break;
+	case "dark": '#705746'; break;
+	case "steel": '#B7B7CE'; break;
+	case "fairy": '#D685AD'; break;
+  default : "white"
+
+}
+function getColor(x){
+
+  return (x === "normal") ? '#A8A77A'
+  :(x === "fire") ? '#EE8130'
+  :(x === "water") ? '#6390F0' 
+  :(x === "electric") ? '#F7D02C'
+  :(x=== "grass") ? '#7AC74C'
+  :(x === "ice") ? '#96D9D6'
+  :(x === "fighting") ? '#C22E28'
+  :(x === "poison") ? '#A33EA1'
+  :(x === "ground") ? '#E2BF65'
+  :(x === "flying") ? '#A98FF3'
+  :(x === "psychic") ? '#F95587'
+  :(x === "bug") ? '#A6B91A'
+  :(x === "rock") ? '#B6A136'
+  :(x === "ghost") ? '#735797'
+  :(x === "dragon") ? '#6F35FC'
+  :(x === "dark") ? '#705746'
+  :(x === "steel") ? '#B7B7CE'
+  :(x === "fairy") ? '#D685AD'
+  :"white"
+
+}
+ 
+(capArr.length <= 5 )? 
+:setCapArr(capArr)

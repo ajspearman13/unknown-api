@@ -45,7 +45,7 @@ function Pokemon(props){
  const [color, setColor] =useState('')
  const [id, setId] = useState('')
  const [battleStats, setBattleStats] = useState('')
- const {value, setValue, pageNum} = useContext(Battle)
+
   useEffect(()=> { 
   axios.get(props.link) 
         .then(res =>{
@@ -64,13 +64,7 @@ function Pokemon(props){
          }))
         })
         .catch((err) => {console.error(err)})  
-
-        
-        
   }, [props.link]) 
-
-
-
   return(
     <div  >
       <Display   name={name} type={type} baseEx={baseEx} stats={stats} pic={pic} 
@@ -85,65 +79,55 @@ function Display(props){
   const background = props.color
   const dropInfo = useRef()
   const dropdown = useRef()
+  const btnBox = useRef()
   const [show, setShow] = useState('drop-info')
-  
   const checkbox = useRef()
   const [btnText, setBtnText] = useState('select')
-  
-  const {value, setValue, pageNum} = useContext(Battle)
-  //const pageNum = useContext(Battle)
-  
+  const [btnColor, setBtnColor] = useState('white')
+  const {value, setValue} = useContext(Battle)
   function toggle(){
     return (show === 'drop-info') ? setShow('show')
     : setShow('drop-info')  
   }
-  
   function captured(){
     if (btnText === 'select'){
-      if   (value.length === 6){  alert('full')}
+      if   (value.length === 6){  alert('SORRY!!! YOU CAN ONLY SELECT 6 POKEMON')}
       else {setBtnText('drop')
-           setValue([...value, props.data])}
-         
+           setValue([...value, props.data])
+           setBtnColor(props.color)               ////// change  
+          }    
      } 
      else{ setBtnText('select') 
+     setBtnColor('white')
          setValue  ( value.filter(x => x[0] !== props.data[0]))
-         
      }
-   
-
   }
   function remove(x){
-      if  (value.map(x=>x[0]).includes(props.data[0])) {setBtnText('drop')}  
-  }
-  function test(){
- 
- //console.log(  value.map(x=>x[0]).includes(props.data[0] ) )
- console.log(pageNum)
- console.log(props.stats)
-
+      if  (value.map(x=>x[0]).includes(props.data[0]))  { return ( setBtnText('drop'), setBtnColor(props.color)) }  
   }
  useEffect(() => {
   remove()
  //console.log('')
  }, [remove])
- 
   return(
     <div style={{backgroundColor: background }} className="poke-box" key={props.name} >
       <div >
         <p className='poke-id'> No. {props.id} </p> 
-        <button onClick={test}>test</button>
-        <button onClick={captured}  ref={checkbox} disabled={false} >{btnText}</button>
+        <div ref={btnBox} className='btn-box'>
+        <button onClick={captured}  ref={checkbox} className='select-btn' style={{backgroundColor: btnColor}} disabled={false} >{btnText}</button>
+        <br/>
+        </div>
         <div className="poke-pic">
           <img src={props.pic} className="pic"  alt={props.name} />
         </div>
         <p className='poke-name'>{props.name}</p>
         <p className='poke-type'>  {props.type}</p>
-        <button className="drop-button" onClick={toggle} >Stats</button>
+        <button className="drop-button" onClick={toggle} >STATS</button>
       </div>     
       <div className="dropdown"  ref={dropdown}>
         <div ref={dropInfo} className={show}   >
           <ul>
-            <li key={Math.random()} > EXP <span>{props.baseEx} </span></li>
+            <li key={Math.random() +  props.name} > EXP <span>{props.baseEx} </span></li>
             {props.stats}
           </ul>
         </div>

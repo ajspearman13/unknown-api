@@ -1,9 +1,11 @@
+@import url('http://fonts.cdnfonts.com/css/pokemon-solid');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
 body{
     background-color: rgba(209, 209, 209, 0.075);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
 }
-#arrow-pic{
-    width: 48px;
-}
+#arrow-pic{ width: 48px;}
 #top-btn{
     position: fixed;
     bottom: 65px;
@@ -18,19 +20,22 @@ body{
 .header{
     position: fixed;
     height: 70px;
-    background-color: rgba(209, 209, 209, 0.925);
+    background-image: url("https://images.alphacoders.com/201/201831.png");
     width: 100%;
-    box-shadow: 5px 0px 5px 5px rgba(0, 0, 0, 0.295);
     border-radius: 7px;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     z-index: 1;
     padding-bottom: 35px;
+    padding-top: 5px;
 }
-.pg-btn:hover{
-    transform: scale(1.2);
+h1{
+    font-family: 'Pokemon Solid', sans-serif;   
+    background-image: url("https://images.alphacoders.com/201/201831.png");                                 
 }
+#logo{    width: 160px;}
+.pg-btn:hover{ transform: scale(1.2);}
 .pg-btn{ 
     margin-top: 60px;
     align-items: center;
@@ -59,72 +64,125 @@ body{
     touch-action: manipulation;
     white-space: nowrap;
     will-change: box-shadow,transform;
-    font-size: 18px;
+    font-size: 14px;
 }
-
 #page-num{
     position: fixed;
     top: 65px;
+    font-family: 'Pokemon Solid', sans-serif;   
 }
-.bottomImg{
-   
-   
+.bottom-pic{
+    -webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
 .bottomPoke{
     display: flex;
-     margin-left: 5px;
-     margin-right: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
     border-radius: 30px;
+    -webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
-
 #bottom{
-  
     display: flex;
     flex-direction: row;
     flex-shrink: calc(.8);
     position: fixed ;
-    bottom : -40px;
+    bottom : -50px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: bisque;
     padding-right: 10px;
     padding-left: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
     border-radius: 10px;
 }
-#bottom:hover{
-    bottom: 0;
-}
+#bottom:hover{ bottom: 0;  }
 @media (max-width: 550px ){
     #bottom{
-  
         display: flex;
         flex-direction: column;
         position: fixed ;
         top:50%;
         left: 0px;
         transform: translateY(-50%);
-        height: 300px;
-        
+        max-height: 300px;
     }
     #bottom:hover{
         transform:scale(2);
         bottom: auto;
-        
+        margin-top: -70px;
         padding-top: 10px;
-       margin-left: 20px;
-    }
-    .bottomImg{
-     width: 30px;
+        margin-left: 20px;
     }
     .bottomPoke{
         margin-top: 3px;
         margin-bottom: 3px;
     }
-
-
-
+    .bottom-pic{ width: 30px; }
 }
-
-
+@-webkit-keyframes scale-in-center {
+    0% {
+      -webkit-transform: scale(0);
+              transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      opacity: 1;
+    }
+  }
+  @keyframes scale-in-center {
+    0% {
+      -webkit-transform: scale(0);
+              transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      opacity: 1;
+    }
+  }
+  @-webkit-keyframes slide-in-blurred-tl {
+    0% {
+      -webkit-transform: translate(-1000px, -1000px) skew(80deg, 10deg);
+              transform: translate(-1000px, -1000px) skew(80deg, 10deg);
+      -webkit-transform-origin: 100% 0%;
+              transform-origin: 100% 0%;
+      -webkit-filter: blur(40px);
+              filter: blur(40px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translate(0, 0) skew(0deg, 0deg);
+              transform: translate(0, 0) skew(0deg, 0deg);
+      -webkit-transform-origin: 50% 50%;
+              transform-origin: 50% 50%;
+      -webkit-filter: blur(0);
+              filter: blur(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-blurred-tl {
+    0% {
+      -webkit-transform: translate(-1000px, -1000px) skew(80deg, 10deg);
+              transform: translate(-1000px, -1000px) skew(80deg, 10deg);
+      -webkit-transform-origin: 100% 0%;
+              transform-origin: 100% 0%;
+      -webkit-filter: blur(40px);
+              filter: blur(40px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translate(0, 0) skew(0deg, 0deg);
+              transform: translate(0, 0) skew(0deg, 0deg);
+      -webkit-transform-origin: 50% 50%;
+              transform-origin: 50% 50%;
+      -webkit-filter: blur(0);
+              filter: blur(0);
+      opacity: 1;
+    }
+  }
+  

@@ -3,6 +3,8 @@ import React, { useState , useEffect, useRef, useContext} from 'react';
 import './App.css';
 import './pokedex.css';
 import { Battle } from "./Context";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function getColor(x){
   return (x === "normal") ? '#A8A77A'
@@ -27,6 +29,10 @@ function getColor(x){
 }
 function Pokedex(props){
  const links = props.urls.map(x => <Pokemon link={x} key={x}  />)
+ useEffect(() => {
+  AOS.init();
+    AOS.refresh();
+ }, [])
  
   return(
     <div id="list-wrapper"> 
@@ -45,7 +51,9 @@ function Pokemon(props){
  const [color, setColor] =useState('')
  const [id, setId] = useState('')
  const [battleStats, setBattleStats] = useState('')
-
+ const [hp, setHp] = useState('')
+ const [attack, setAttack] = useState('')
+ const [backPic, setBackPic] = useState('')
   useEffect(()=> { 
   axios.get(props.link) 
         .then(res =>{
@@ -57,6 +65,9 @@ function Pokemon(props){
          setColor(getColor(res.data.types[0].type.name) )
          setId(res.data.id)
          setBattleStats(res.data.stats)
+         setHp(res.data.stats[0]['base_stat'])
+         setAttack(res.data.stats[1]['base_stat'])
+         setBackPic(res.data.sprites['back_default'])
          setStats(res.data.stats.map(x => {
          return <li > <span>{x.stat.name.toUpperCase() }</span> 
                      <span>{x["base_stat"]}  </span>
@@ -69,7 +80,7 @@ function Pokemon(props){
     <div  >
       <Display   name={name} type={type} baseEx={baseEx} stats={stats} pic={pic} 
                    color={color} id={id}  
-                   data={[name, type, baseEx, stats, pic, color, id, battleStats,  props.link]}
+                   data={[name, type, baseEx, stats, pic, color, id, battleStats,  props.link, hp, attack, backPic]}
       />
     </div>
   )
@@ -84,7 +95,7 @@ function Display(props){
   const checkbox = useRef()
   const [btnText, setBtnText] = useState('select')
   const [btnColor, setBtnColor] = useState('white')
-  const {value, setValue} = useContext(Battle)
+  const {value, setValue, removeBtnChange, setRemoveBtnChange} = useContext(Battle)
   function toggle(){
     return (show === 'drop-info') ? setShow('show')
     : setShow('drop-info')  
@@ -95,30 +106,37 @@ function Display(props){
       else {setBtnText('drop')
            setValue([...value, props.data])
            setBtnColor(props.color)               ////// change  
+          setRemoveBtnChange([66 +props.id])
+          
           }    
      } 
      else{ setBtnText('select') 
      setBtnColor('white')
          setValue  ( value.filter(x => x[0] !== props.data[0]))
-     }
+         setRemoveBtnChange([props.id])
+        }
+     console.log(removeBtnChange)
   }
   function remove(x){
       if  (value.map(x=>x[0]).includes(props.data[0]))  { return ( setBtnText('drop'), setBtnColor(props.color)) }  
-  }
+ 
+    }
  useEffect(() => {
   remove()
  //console.log('')
- }, [remove])
+ }, [remove, removeBtnChange ])
   return(
-    <div style={{backgroundColor: background }} className="poke-box" key={props.name} >
+    <div style={{backgroundColor: background }}  className="poke-box" key={props.name} 
+    data-aos="zoom-in-up" data-aos-delay="100" data-aos-offset="200"  >
       <div >
         <p className='poke-id'> No. {props.id} </p> 
         <div ref={btnBox} className='btn-box'>
+
         <button onClick={captured}  ref={checkbox} className='select-btn' style={{backgroundColor: btnColor}} disabled={false} >{btnText}</button>
         <br/>
         </div>
         <div className="poke-pic">
-          <img src={props.pic} className="pic"  alt={props.name} />
+          <img src={props.pic} className="pic" data-aos="flip-down" data-aos-delay="200" alt={props.name} />
         </div>
         <p className='poke-name'>{props.name}</p>
         <p className='poke-type'>  {props.type}</p>
@@ -135,4 +153,7 @@ function Display(props){
     </div>
   )
 }
+
+
+
 export  default Pokedex;

@@ -1,23 +1,302 @@
-const arr = [7 , 8, 10]
-function test(){
-return (! arr.includes(48))
-}
-console.log(test(arr))
+import { BrowserRouter, Route , Routes, Navigate, Link } from 'react-router-dom'
 
-if (btnText === 'select'){
-    if   (value.length === 6){  alert('full')}
-    else {setBtnText('drop')
-         setValue([...value, props.data])}
-       
-   } 
-   else{ setBtnText('select') 
-       setValue  ( value.filter(x => x[0] !== props.data[0]))
-       
+
+
+import React, { useState , useEffect, useRef , useContext } from 'react';
+import Pokedex  from './Pokedex';
+import Arena  from './Arena';
+import axios from 'axios';
+import arrow from './arrow-pic.png';
+import {Battle} from './Context.js';
+
+<link href="http://fonts.cdnfonts.com/css/pokemon-solid" rel="stylesheet"></link>
+
+function App(){
+  const [value, setValue] = useState([])
+  const bottomPoke= useRef()
+  const bottom = useRef()
+
+
+  function selectDisplay(x){
+    
+    function unSelectPoke(){
+      console.log(x)
+      console.log(value)
+
+      setValue(value.filter(p => p !== x))
+    }
+    return <div style={{background:x[5]}} ref={bottomPoke} className='bottomPoke' onClick={unSelectPoke} >    
+        <br/><img src={x[4]}    className='bottom-pic'   alt={x[0]}/>
+     </div>  
    }
-   display: flex;
-    flex-direction: row;
-    position: fixed ;
-    bottom : -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: bisque;
+ 
+  return(
+    <div>
+       
+      <BrowserRouter> 
+      <nav>
+        <Link to='/'>Home</Link>  
+        <Link to='/arena'>Arena</Link>
+      </nav>
+      <Battle.Provider value={{value, setValue, selectDisplay, bottom }} >
+       <Routes>
+      
+            <Route path='/' element={<Home/>}  />
+            <Route path='/arena' element={<Arena/>}  />
+    
+      </Routes>
+
+      </Battle.Provider>
+      </BrowserRouter>
+    
+    </div>
+  )
+}
+function Home() {
+  const [siteArr, setSiteArr] = useState([])
+  const [page, setPage] = useState("https://pokeapi.co/api/v2/pokemon/?limit=20")
+  const [nameArr, setNameArr] = useState([])
+  const [pageNum,setPageNum] = useState(1)
+  
+  const prevBtn = useRef()
+  const nextBtn = useRef()
+  const lastBtn = useRef()
+  const firstBtn = useRef()
+  
+  
+ 
+  const logo= useRef()
+  //const [value, setValue] = useState([])
+  const {value, setValue, selectDisplay, bottom} = useContext(Battle)
+
+  function nextPage(){
+    axios.get(page).then(res =>{
+      setPage(res.data.next) 
+     
+    }) 
+    setPageNum(pageNum + 1)
+    window.scrollTo(0,0)
+  }
+  function previousPage(){
+    axios.get(page).then(res =>{
+      setPage(res.data.previous) 
+    }) 
+    setPageNum(pageNum - 1)
+    window.scrollTo(0,0)
+  }  
+  function lastPage(){
+    setPage('https://pokeapi.co/api/v2/pokemon/?offset=1118&limit=8')
+    setPageNum(57)
+    window.scrollTo(0,0) 
+  }
+  function firstPage(){
+    setPage("https://pokeapi.co/api/v2/pokemon/?limit=20")
+    setPageNum(1)
+  }
+  function scrollTop(){
+    window.scrollTo(0,0)
+  }
+  useEffect(()=> { 
+    axios.get(page).then(response=> {
+          (response.data.previous === null)? prevBtn.current.style.visibility='hidden' 
+          : prevBtn.current.style.visibility='visible' ;
+          (response.data.next === null)? nextBtn.current.style.visibility='hidden' 
+          :nextBtn.current.style.visibility='visible' ;
+    }).then((pageNum === 1 ) ? firstBtn.current.style.visibility='hidden'
+            :firstBtn.current.style.visibility='visible'
+      ).then((pageNum === 57) ? lastBtn.current.style.visibility='hidden'
+      :lastBtn.current.style.visibility='visible')
+  }, [pageNum , page ])
+  useEffect(()=> { 
+    axios.get(page) 
+            .then(response => {
+              setNameArr(response.data.results.map(x =>  x.name) )
+              setSiteArr(response.data.results.map(x =>  x.url) )             
+             })
+      .catch((err) => {console.error(err) })   
+  }, [page ]) 
+  useEffect(()=> { 
+   (value.length < 1 ) ? bottom.current.style.background="transparent"  
+  : bottom.current.style.background="linear-gradient(333deg, rgba(189,185,185,1) 0%, rgba(254,253,253,1) 100%, rgba(186,182,182,1) 100%)"
+   }, [value ]) 
+  //const selectName = value.map(x=> x[0] + " ")
+  //const selectPic = value.map(x=> x[4])
+  //const selectColor = value.map(x=> x[5])  56
+  //const selectType = value.map(x=> x[1][0])
+  //const selectHp = value.map(x=> x[7][0]['base_stat'])
+  //const selectAttack = value.map(x=> x[7][1]['base_stat'])
+  //const selectSpeed = value.map(x=> x[7][5]['base_stat'])
+  //const selectDefense = value.map(x=> x[7][2]['base_stat'])
+  
+  return (
+    <div className="App">
+      <div className='header'>
+        <div >  <button  className='pg-btn' id='first-btn' ref={firstBtn} onClick={firstPage} > first </button></div>
+          <div >  <button  className='pg-btn' id='prev-btn' ref={prevBtn} onClick={previousPage} > prev </button></div>
+          <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/2560px-International_Pok%C3%A9mon_logo.svg.png' alt='logo' id='logo'  ref={logo}  />
+          <div > <button className='pg-btn' id='next-btn' ref={nextBtn} onClick={nextPage} > next </button> </div>
+          <div > <button className='pg-btn' id='last-btn' ref={lastBtn} onClick={lastPage} > last </button> </div>  
+          <div id="page-num">
+            <p>Page {pageNum} / 57 </p>
+          </div> 
+          <button onClick={scrollTop} id='top-btn' > 
+              <img id='arrow-pic' src={arrow}  alt='up-arrow'/>
+          </button>      
+      </div>
+     
+      
+        <Pokedex names={nameArr} urls={siteArr}  /> 
+       
+     <div ref={bottom} id='bottom'> 
+        {value.map(selectDisplay)}
+     </div>    
+    </div>
+  );
+}
+
+
+export default App;
+
+import axios from 'axios';
+import React, { useState , useEffect, useRef, useContext} from 'react';
+import './App.css';
+import './pokedex.css';
+import { Battle } from "./Context";
+
+function getColor(x){
+  return (x === "normal") ? '#A8A77A'
+  :(x === "fire") ? '#EE8130'
+  :(x === "water") ? '#6390F0' 
+  :(x === "electric") ? '#F7D02C'
+  :(x=== "grass") ? '#7AC74C'
+  :(x === "ice") ? '#96D9D6'
+  :(x === "fighting") ? '#C22E28'
+  :(x === "poison") ? '#A33EA1'
+  :(x === "ground") ? '#E2BF65'
+  :(x === "flying") ? '#A98FF3'
+  :(x === "psychic") ? '#F95587'
+  :(x === "bug") ? '#A6B91A'
+  :(x === "rock") ? '#B6A136'
+  :(x === "ghost") ? '#735797'
+  :(x === "dragon") ? '#6F35FC'
+  :(x === "dark") ? '#705746'
+  :(x === "steel") ? '#B7B7CE'
+  :(x === "fairy") ? '#D685AD'
+  :"white"
+}
+function Pokedex(props){
+ const links = props.urls.map(x => <Pokemon link={x} key={x}  />)
+ 
+  return(
+    <div id="list-wrapper"> 
+      <div id="poke-list">
+      {links}
+      </div>
+    </div>
+  )
+}
+function Pokemon(props){
+ const [name, setName] = useState('')
+ const [type, setType] = useState('')
+ const [pic, setPic] = useState('')
+ const [baseEx, setBaseEx] = useState('')
+ const [stats, setStats] = useState('')
+ const [color, setColor] =useState('')
+ const [id, setId] = useState('')
+ const [battleStats, setBattleStats] = useState('')
+
+  useEffect(()=> { 
+  axios.get(props.link) 
+        .then(res =>{
+         setName(res.data.name.toLocaleUpperCase())
+         setType(res.data.types.map(x => x.type.name.toLocaleUpperCase() +" " )) // check this out
+          //setMoves(res.data.moves.map(x => x.move.name).sort().map(x => <li>{x}</li>)    )
+         setPic(res.data.sprites['front_default'])
+         setBaseEx(res.data['base_experience'])
+         setColor(getColor(res.data.types[0].type.name) )
+         setId(res.data.id)
+         setBattleStats(res.data.stats)
+         setStats(res.data.stats.map(x => {
+         return <li > <span>{x.stat.name.toUpperCase() }</span> 
+                     <span>{x["base_stat"]}  </span>
+                </li> 
+         }))
+        })
+        .catch((err) => {console.error(err)})  
+  }, [props.link]) 
+  return(
+    <div  >
+      <Display   name={name} type={type} baseEx={baseEx} stats={stats} pic={pic} 
+                   color={color} id={id}  
+                   data={[name, type, baseEx, stats, pic, color, id, battleStats,  props.link]}
+      />
+    </div>
+  )
+}
+function Display(props){ 
+  //const style = [ "colours", ".", props.type[0] ].join("")
+  const background = props.color
+  const dropInfo = useRef()
+  const dropdown = useRef()
+  const btnBox = useRef()
+  const [show, setShow] = useState('drop-info')
+  const checkbox = useRef()
+  const [btnText, setBtnText] = useState('select')
+  const [btnColor, setBtnColor] = useState('white')
+  const {value, setValue} = useContext(Battle)
+  function toggle(){
+    return (show === 'drop-info') ? setShow('show')
+    : setShow('drop-info')  
+  }
+  function captured(){
+    if (btnText === 'select'){
+      if   (value.length === 6){  alert('SORRY!!! YOU CAN ONLY SELECT 6 POKEMON')}
+      else {setBtnText('drop')
+           setValue([...value, props.data])
+           setBtnColor(props.color)               ////// change  
+          }    
+     } 
+     else{ setBtnText('select') 
+     setBtnColor('white')
+         setValue  ( value.filter(x => x[0] !== props.data[0]))
+     }
+  }
+  function remove(x){
+      if  (value.map(x=>x[0]).includes(props.data[0]))  { return ( setBtnText('drop'), setBtnColor(props.color)) }  
+  }
+ useEffect(() => {
+  remove()
+ //console.log('')
+ }, [remove])
+  return(
+    <div style={{backgroundColor: background }} className="poke-box" key={props.name} >
+      <div >
+        <p className='poke-id'> No. {props.id} </p> 
+        <div ref={btnBox} className='btn-box'>
+
+        <button onClick={captured}  ref={checkbox} className='select-btn' style={{backgroundColor: btnColor}} disabled={false} >{btnText}</button>
+        <br/>
+        </div>
+        <div className="poke-pic">
+          <img src={props.pic} className="pic"  alt={props.name} />
+        </div>
+        <p className='poke-name'>{props.name}</p>
+        <p className='poke-type'>  {props.type}</p>
+        <button className="drop-button" onClick={toggle} >STATS</button>
+      </div>     
+      <div className="dropdown"  ref={dropdown}>
+        <div ref={dropInfo} className={show}   >
+          <ul>
+            <li key={Math.random() +  props.name} > EXP <span>{props.baseEx} </span></li>
+            {props.stats}
+          </ul>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+
+export  default Pokedex;
+

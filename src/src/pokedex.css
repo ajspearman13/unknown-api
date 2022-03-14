@@ -2,6 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap');
 body{
     font-family: 'Inter', sans-serif;
+    
+}
+html{
+    scroll-behavior: smooth;
 }
 button{
     font-family: 'Inter', sans-serif;
@@ -34,9 +38,9 @@ button{
     color: white;
     margin: 3px;
     box-shadow: 5px 0px 5px 5px rgba(0, 0, 0, 0.295);
-    -webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+
 }
+
 .poke-name{
     font-size: large;
     text-align: center;
@@ -56,12 +60,11 @@ button{
     margin-right: 5px;
 }
 .pic:hover{
-    animation: rotation .3s  linear;
+   
+    -webkit-animation: vibrate-1 0.3s linear 4 both;
+    animation: vibrate-1 0.3s linear 4 both;
 }
-@keyframes rotation{
-    from{ transform: rotate(0deg)}
-    to {   transform: rotate(359deg) }
-}
+
 .poke-type{
     margin-left: 10px;
     font-size: 16px;
@@ -108,7 +111,8 @@ button{
     width: 100%;
     background-color: transparent;
     border: none;
-    padding-bottom: 15px;
+    padding-bottom: 7px;
+    padding-top: 7px;
     color: whitesmoke;
     font-size: 14px; 
 }
@@ -119,16 +123,19 @@ button{
 .drop-button:hover{
     background-color: rgba(216, 191, 216, 0.26);
     font-size: large;
+ 
 }
 .drop-info{
   max-height: 0;
   overflow: hidden;
-  transition: all cubic-bezier(0.55, 0.055, 0.675, 0.19);
+ 
 }
 .show {
     height: auto;
     max-height: 100%;
-    transition : all 4.ms cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    -webkit-transition: all .95s ease;
+	
+	transition: all .95s ease;
     color: black;
     background-color: whitesmoke;
 }
@@ -161,5 +168,57 @@ li{
       -webkit-transform: scale(1);
               transform: scale(1);
       opacity: 1;
+    }
+  }
+  @-webkit-keyframes vibrate-1 {
+    0% {
+      -webkit-transform: translate(0);
+              transform: translate(0);
+    }
+    20% {
+      -webkit-transform: translate(-2px, 2px);
+              transform: translate(-2px, 2px);
+    }
+    40% {
+      -webkit-transform: translate(-2px, -2px);
+              transform: translate(-2px, -2px);
+    }
+    60% {
+      -webkit-transform: translate(2px, 2px);
+              transform: translate(2px, 2px);
+    }
+    80% {
+      -webkit-transform: translate(2px, -2px);
+              transform: translate(2px, -2px);
+    }
+    100% {
+      -webkit-transform: translate(0);
+              transform: translate(0);
+    }
+  }
+  @keyframes vibrate-1 {
+    0% {
+      -webkit-transform: translate(0);
+              transform: translate(0);
+    }
+    20% {
+      -webkit-transform: translate(-2px, 2px);
+              transform: translate(-2px, 2px);
+    }
+    40% {
+      -webkit-transform: translate(-2px, -2px);
+              transform: translate(-2px, -2px);
+    }
+    60% {
+      -webkit-transform: translate(2px, 2px);
+              transform: translate(2px, 2px);
+    }
+    80% {
+      -webkit-transform: translate(2px, -2px);
+              transform: translate(2px, -2px);
+    }
+    100% {
+      -webkit-transform: translate(0);
+              transform: translate(0);
     }
   }
